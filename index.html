@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentily - Property Management Platform</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Inter & Source Sans Pro) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <style>
+        /* STRATOS 2.0: Technology & Innovation Design System */
+        :root {
+            --primary-color: #1E40AF;      /* Royal Blue */
+            --primary-hover: #1D4ED8;
+            --secondary-color: #7C3AED;    /* Electric Purple */
+            --accent-color: #06B6D4;       /* Cyan */
+            --accent-hover: #0891B2;
+            --neutral-dark: #1F2937;       /* Dark Gray */
+            --neutral-light: #F1F5F9;      /* Cool White */
+            --neutral-white: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #4B5567;
+            --danger-color: #DC2626;
+            --success-color: #16A34A;
+            --warning-color: #D97706;
+        }
+
+        /* Typography System */
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--neutral-light);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom Component Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--neutral-white);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: var(--neutral-white);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--neutral-white);
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #D1D5DB;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-secondary:hover {
+            background-color: #F9FAFB;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-input {
+            width: 100%;
+            border-radius: 0.5rem;
+            border: 1px solid #D1D5DB;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+        }
+
+        /* STRATOS Content Cards */
+        .content-card {
+            background-color: var(--neutral-white);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .content-card.info {
+            border-left-color: var(--primary-color);
+            background: rgba(30, 64, 175, 0.05);
+        }
+        
+        .content-card.success {
+            border-left-color: var(--success-color);
+            background: rgba(22, 163, 74, 0.05);
+        }
+        
+        .content-card.warning {
+            border-left-color: var(--warning-color);
+            background: rgba(217, 119, 6, 0.05);
+        }
+        
+        .content-card.danger {
+            border-left-color: var(--danger-color);
+            background: rgba(220, 38, 38, 0.05);
+        }
+
+        /* Hide all pages by default */
+        .page {
+            display: none;
+        }
+        /* Show the active page */
+        .page.active {
+            display: block;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background-color: var(--neutral-dark);
+            color: var(--neutral-light);
+            transition: width 0.3s ease;
+        }
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #D1D5DB;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-link:hover {
+            background-color: #374151;
+            color: var(--neutral-white);
+            transform: translateX(4px);
+        }
+        .sidebar-link.active {
+            background-color: var(--primary-color);
+            color: var(--neutral-white);
+        }
+        .sidebar-link svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            stroke-width: 2.5px;
+        }
+        
+        /* Domain-specific styling */
+        .domain-operations {
+            border-left-color: #3B82F6;
+        }
+        
+        .domain-sales {
+            border-left-color: #EF4444;
+        }
+        
+        .domain-finance {
+            border-left-color: #10B981;
+        }
+        
+        .domain-hr {
+            border-left-color: #F59E0B;
+        }
+        
+        .domain-tech {
+            border-left-color: #8B5CF6;
+        }
+        
+        /* Data table styling */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.75rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .data-table th {
+            background: rgba(30, 64, 175, 0.15);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 3px solid rgba(30, 64, 175, 0.3);
+        }
+        
+        .data-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #F9FAFB;
+        }
+        
+        .data-table tr:hover {
+            background: rgba(30, 64, 175, 0.05);
+        }
+
+        /* Help button styling */
+        .help-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .help-button:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.05);
+        }
+        
+        /* Tour step styling */
+        .tour-step {
+            position: absolute;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            max-width: 320px;
+            z-index: 1000;
+        }
+        
+        .tour-step::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        
+        .tour-step.top::after {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0 10px;
+            border-color: white transparent transparent transparent;
+        }
+        
+        .tour-step.bottom::after {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent white transparent;
+        }
+        
+        .tour-step.left::after {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+        
+        .tour-step.right::after {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        /* Feature highlight */
+        .feature-highlight {
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.5);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1001;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 
+      ======================================================================
+      DEMO INSTRUCTIONS MODAL (Shows first)
+      ======================================================================
+    -->
+    <div id="demo-instructions-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">🚀 Rentily MVP Demo Instructions</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('demo-instructions-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <div class="content-card info">
+                    <h4 class="text-lg font-semibold mb-3">Welcome to the Rentily MVP Demo!</h4>
+                    <p>This is a fully functional prototype of a property management platform built with modern web technologies. Explore the features designed for landlords, tenants, and administrators.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="content-card domain-operations">
+                        <h4 class="font-semibold mb-2">🔄 How to Use This Demo</h4>
+                        <ul class="text-sm space-y-1">
+                            <li>• Select your role below to access different dashboards</li>
+                            <li>• Click the <span class="font-semibold">?</span> button for contextual help</li>
+                            <li>• Try all interactive features</li>
+                            <li>• No real data is being saved</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-card domain-hr">
+                        <h4 class="font-semibold mb-2">👥 Demo Credentials</h4>
+                        <p class="text-sm"><strong>Email:</strong> Any text works</p>
+                        <p class="text-sm"><strong>Password:</strong> Any text works</p>
+                        <p class="text-sm mt-2"><em>Authentication is simulated - just select your role!</em></p>
+                    </div>
+                    
+                    <div class="content-card domain-tech">
+                        <h4 class="font-semibold mb-2">🔍 Key Features to Explore</h4>
+                        <ul class="text-sm space-y-1">
+                            <li>• Multi-role dashboards</li>
+                            <li>• Property management</li>
+                            <li>• Tenant applications</li>
+                            <li>• In-app messaging</li>
+                            <li>• Service requests</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-card warning">
+                    <h4 class="font-semibold mb-2">📝 About This MVP</h4>
+                    <p class="text-sm">This demo showcases the core functionality that would be built with WeWeb + Xano/Supabase. The actual implementation would include:</p>
+                    <ul class="text-sm mt-2 space-y-1">
+                        <li>• Real backend integration with Xano/Supabase</li>
+                        <li>• Actual user authentication</li>
+                        <li>• Live data persistence</li>
+                        <li>• Stripe payment integration</li>
+                        <li>• File upload functionality</li>
+                    </ul>
+                </div>
+                
+                <div class="flex justify-between items-center pt-4 border-t">
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="dont-show-again" class="rounded">
+                        <label for="dont-show-again" class="text-sm">Don't show this again</label>
+                    </div>
+                    <button class="btn-primary" onclick="startDemo()">
+                        Get Started
+                        <i data-lucide="arrow-right" class="inline-block ml-2 w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      AUTHENTICATION PAGE
+      ======================================================================
+    -->
+    <div id="auth-page" class="page min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div class="w-full max-w-md">
+            <div class="content-card">
+                <div class="p-8">
+                    <div class="flex justify-center mb-6">
+                        <!-- Rentily Logo -->
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 26L24 16L34 26V40H28V30H20V40H14V26Z" fill="#1E40AF"/>
+                            <path d="M42 22L24 4L6 22V24H10V44H22V34H26V44H38V24H42V22Z" stroke="#1E40AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl font-bold text-center text-gray-900 mb-2">Welcome to Rentily</h1>
+                    <p class="text-center text-gray-600 mb-8">Manage your properties with ease.</p>
+                    
+                    <form id="login-form" class="space-y-6">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="you@example.com" required>
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        
+                        <!-- Role Selector -->
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm font-medium text-gray-700">Login as:</label>
+                            <div class="flex items-center space-x-4">
+                                <label class="flex items-center space-x-1 cursor-pointer">
+                                    <input type="radio" name="role" value="tenant" class="form-radio text-blue-600">
+                                    <span class="text-sm">Tenant</span>
+                                </label>
+                                <label class="flex items-center space-x-1 cursor-pointer">
+                                    <input type="radio" name="role" value="landlord" class="form-radio text-blue-600" checked>
+                                    <span class="text-sm">Landlord</span>
+                                </label>
+                                <label class="flex items-center space-x-1 cursor-pointer">
+                                    <input type="radio" name="role" value="admin" class="form-radio text-blue-600">
+                                    <span class="text-sm">Admin</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn-primary w-full" onclick="login()">Sign In</button>
+                        </div>
+                        <p class="text-center text-sm text-gray-600">
+                            Don't have an account? <a href="#" class="font-medium text-blue-700 hover:underline">Sign up</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      LANDLORD DASHBOARD
+      ======================================================================
+    -->
+    <div id="landlord-dashboard" class="page">
+        <div class="flex h-screen bg-gray-100">
+            <!-- Sidebar -->
+            <aside class="sidebar w-64 flex-shrink-0 flex flex-col">
+                <div class="h-20 flex items-center justify-center px-6 flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-white">Rentily</h1>
+                </div>
+                <nav class="flex-1 space-y-2 px-4 py-4 overflow-y-auto">
+                    <a href="#" class="sidebar-link active" onclick="showLandlordTab('landlord-properties')">
+                        <i data-lucide="home"></i>
+                        <span>Properties</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showLandlordTab('landlord-applications')">
+                        <i data-lucide="file-text"></i>
+                        <span>Applications</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showLandlordTab('landlord-messages')">
+                        <i data-lucide="message-square"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showLandlordTab('landlord-requests')">
+                        <i data-lucide="wrench"></i>
+                        <span>Service Requests</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showLandlordTab('landlord-billing')">
+                        <i data-lucide="credit-card"></i>
+                        <span>Billing</span>
+                    </a>
+                </nav>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="#" class="sidebar-link" onclick="logout()">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 flex flex-col overflow-hidden">
+                <!-- Topbar -->
+                <header class="h-20 bg-white border-b border-gray-200 flex-shrink-0 flex items-center justify-between px-8">
+                    <h2 id="landlord-header" class="text-2xl font-semibold text-gray-800">My Properties</h2>
+                    <div class="flex items-center space-x-4">
+                        <button class="btn-primary" onclick="showModal('add-property-modal')">
+                            <i data-lucide="plus" class="inline-block -ml-1 mr-2 w-5 h-5"></i>
+                            Add Property
+                        </button>
+                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    </div>
+                </header>
+
+                <!-- Dashboard Content -->
+                <div class="flex-1 overflow-y-auto p-8">
+                    
+                    <!-- Properties Tab -->
+                    <div id="landlord-properties" class="landlord-tab active">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Property Card Example -->
+                            <div class="content-card domain-operations">
+                                <img src="https://placehold.co/600x400/1E40AF/FFFFFF?text=Property" alt="Property Image" class="h-48 w-full object-cover rounded-t-lg">
+                                <div class="p-5">
+                                    <h3 class="text-xl font-bold mb-2">123 Main St, Apt 4B</h3>
+                                    <p class="text-gray-600 mb-4">A beautiful 2-bed, 1-bath apartment in the heart of downtown.</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-lg font-semibold text-gray-800">$1,800 / mo</span>
+                                        <div class="flex space-x-2">
+                                            <button class="text-gray-500 hover:text-blue-600"><i data-lucide="edit-2" class="w-5 h-5"></i></button>
+                                            <button class="text-gray-500 hover:text-red-600"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Second Property Card -->
+                            <div class="content-card domain-operations">
+                                <img src="https://placehold.co/600x400/7C3AED/FFFFFF?text=Property" alt="Property Image" class="h-48 w-full object-cover rounded-t-lg">
+                                <div class="p-5">
+                                    <h3 class="text-xl font-bold mb-2">456 Oak Avenue</h3>
+                                    <p class="text-gray-600 mb-4">Spacious 3-bedroom house with backyard and garage.</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-lg font-semibold text-gray-800">$2,400 / mo</span>
+                                        <div class="flex space-x-2">
+                                            <button class="text-gray-500 hover:text-blue-600"><i data-lucide="edit-2" class="w-5 h-5"></i></button>
+                                            <button class="text-gray-500 hover:text-red-600"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add Property Card -->
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-gray-50 transition-colors" onclick="showModal('add-property-modal')">
+                                <i data-lucide="plus" class="w-12 h-12 text-gray-400 mb-4"></i>
+                                <p class="text-gray-500 font-medium">Add New Property</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Applications Tab -->
+                    <div id="landlord-applications" class="landlord-tab hidden">
+                        <div class="content-card domain-hr">
+                            <h3 class="text-xl font-semibold mb-4">Pending Applications</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Applicant</th>
+                                        <th>Property</th>
+                                        <th>Submitted</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-3">John Doe</td>
+                                        <td class="p-3">123 Main St, Apt 4B</td>
+                                        <td class="p-3">Oct 30, 2025</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
+                                            <button class="text-green-600 hover:underline">Approve</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">Jane Smith</td>
+                                        <td class="p-3">456 Oak Avenue</td>
+                                        <td class="p-3">Oct 29, 2025</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Under Review</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
+                                            <button class="text-green-600 hover:underline">Approve</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Messages Tab -->
+                    <div id="landlord-messages" class="landlord-tab hidden">
+                        <!-- In-app messaging UI -->
+                        <div class="content-card domain-sales flex" style="height: 600px;">
+                            <div class="w-1/3 border-r">
+                                <div class="p-4 border-b font-semibold">Contacts</div>
+                                <ul class="overflow-y-auto">
+                                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b">
+                                        <p class="font-medium">John Doe (123 Main St)</p>
+                                        <p class="text-sm text-gray-500 truncate">Hey, I have a quick question about the lease terms...</p>
+                                    </li>
+                                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b">
+                                        <p class="font-medium">Jane Smith (456 Oak Ave)</p>
+                                        <p class="text-sm text-gray-500 truncate">Thanks for approving my application!</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="w-2/3 flex flex-col">
+                                <div class="p-4 border-b font-semibold">John Doe</div>
+                                <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50">
+                                    <!-- Chat bubbles -->
+                                    <div class="flex justify-start">
+                                        <div class="bg-white rounded-lg p-3 max-w-xs shadow-sm">
+                                            <p class="text-sm">Hi, I have a question about the security deposit.</p>
+                                            <span class="text-xs text-gray-500 mt-1 block">10:24 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <div class="bg-blue-100 rounded-lg p-3 max-w-xs shadow-sm">
+                                            <p class="text-sm">Sure, what would you like to know?</p>
+                                            <span class="text-xs text-gray-500 mt-1 block">10:25 AM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t bg-white flex">
+                                    <input type="text" class="form-input flex-1 mr-2" placeholder="Type your message...">
+                                    <button class="btn-primary">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Requests Tab -->
+                    <div id="landlord-requests" class="landlord-tab hidden">
+                         <div class="content-card domain-tech">
+                            <h3 class="text-xl font-semibold mb-4">Open Service Requests</h3>
+                            <div class="space-y-4">
+                                <div class="border rounded-lg p-4 flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-semibold">Plumbing Issue</h4>
+                                        <p class="text-sm text-gray-600">Kitchen sink is leaking</p>
+                                        <span class="text-xs text-gray-500">Submitted: Oct 28, 2025</span>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span>
+                                        <button class="btn-secondary text-sm">View Details</button>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-4 flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-semibold">AC Not Working</h4>
+                                        <p class="text-sm text-gray-600">Air conditioning unit making strange noise</p>
+                                        <span class="text-xs text-gray-500">Submitted: Oct 25, 2025</span>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">In Progress</span>
+                                        <button class="btn-secondary text-sm">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Tab -->
+                    <div id="landlord-billing" class="landlord-tab hidden">
+                         <div class="content-card domain-finance">
+                            <h3 class="text-xl font-semibold mb-4">Subscription & Billing</h3>
+                            <p class="text-gray-600 mb-4">You are currently on the <strong>Pro Plan</strong> ($49/mo).</p>
+                            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                                <h4 class="font-semibold mb-2">Current Usage</h4>
+                                <p>Properties: 2/10</p>
+                                <p>Active Tenants: 1/25</p>
+                            </div>
+                            <button class="btn-secondary mr-4">Manage Subscription (via Stripe)</button>
+                            <button class="btn-primary">Upgrade Plan</button>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        
+        <!-- Help Button -->
+        <div class="help-button" onclick="showLandlordTour()">
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      TENANT DASHBOARD
+      ======================================================================
+    -->
+    <div id="tenant-dashboard" class="page">
+        <!-- Simplified Tenant Dashboard Structure -->
+        <div class="flex h-screen bg-gray-100">
+            <!-- Sidebar -->
+            <aside class="sidebar w-64 flex-shrink-0 flex flex-col">
+                <div class="h-20 flex items-center justify-center px-6 flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-white">Rentily</h1>
+                </div>
+                <nav class="flex-1 space-y-2 px-4 py-4 overflow-y-auto">
+                    <a href="#" class="sidebar-link active" onclick="showTenantTab('tenant-apply')">
+                        <i data-lucide="search"></i>
+                        <span>Apply for Property</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showTenantTab('tenant-status')">
+                        <i data-lucide="file-check-2"></i>
+                        <span>My Applications</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showTenantTab('tenant-messages')">
+                        <i data-lucide="message-square"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showTenantTab('tenant-service')">
+                        <i data-lucide="wrench"></i>
+                        <span>Submit Request</span>
+                    </a>
+                </nav>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="#" class="sidebar-link" onclick="logout()">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 flex flex-col overflow-hidden">
+                <header class="h-20 bg-white border-b border-gray-200 flex-shrink-0 flex items-center justify-between px-8">
+                    <h2 id="tenant-header" class="text-2xl font-semibold text-gray-800">Apply for Property</h2>
+                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                </header>
+
+                <div class="flex-1 overflow-y-auto p-8">
+                    <!-- Application Form Tab -->
+                    <div id="tenant-apply" class="tenant-tab active">
+                        <div class="content-card max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-semibold mb-6">Rental Application</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Property Address</label>
+                                    <select class="form-input">
+                                        <option value="">Select a property</option>
+                                        <option value="1">123 Main St, Apt 4B</option>
+                                        <option value="2">456 Oak Avenue</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Full Name</label>
+                                    <input type="text" class="form-input" placeholder="John Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                                    <input type="email" class="form-input" placeholder="john.doe@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                    <input type="tel" class="form-input" placeholder="(123) 456-7890">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Current Address</label>
+                                    <input type="text" class="form-input" placeholder="123 Current St, City, State">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Monthly Income</label>
+                                    <input type="number" class="form-input" placeholder="5000">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Documents (ID, Paystubs, etc.)</label>
+                                    <input type="file" class="form-input" multiple>
+                                </div>
+                                <button type="button" class="btn-primary w-full">Submit Application</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Application Status Tab -->
+                    <div id="tenant-status" class="tenant-tab hidden">
+                        <div class="content-card max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-semibold mb-6">My Applications</h3>
+                            <div class="space-y-4">
+                                <div class="border rounded-lg p-4">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="font-semibold">123 Main St, Apt 4B</h4>
+                                        <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-2">Submitted: Oct 30, 2025</p>
+                                    <button class="btn-secondary mt-3">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages Tab -->
+                    <div id="tenant-messages" class="tenant-tab hidden">
+                        <div class="content-card">
+                            <h3 class="text-2xl font-semibold mb-6">Messages</h3>
+                            <!-- Similar messaging UI as landlord dashboard -->
+                            <p class="text-gray-600">No messages yet. Contact your landlord with any questions.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Request Tab -->
+                    <div id="tenant-service" class="tenant-tab hidden">
+                        <div class="content-card max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-semibold mb-6">Submit Service Request</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Request Type</label>
+                                    <select class="form-input">
+                                        <option value="">Select type</option>
+                                        <option value="plumbing">Plumbing</option>
+                                        <option value="electrical">Electrical</option>
+                                        <option value="heating">Heating/Cooling</option>
+                                        <option value="appliance">Appliance</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                    <textarea class="form-input" rows="4" placeholder="Please describe the issue in detail..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Photos (Optional)</label>
+                                    <input type="file" class="form-input" multiple>
+                                </div>
+                                <button type="button" class="btn-primary w-full">Submit Request</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Help Button -->
+        <div class="help-button" onclick="showTenantTour()">
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      ADMIN DASHBOARD
+      ======================================================================
+    -->
+    <div id="admin-dashboard" class="page">
+        <!-- Simplified Admin Dashboard Structure -->
+        <div class="flex h-screen bg-gray-100">
+            <!-- Sidebar -->
+            <aside class="sidebar w-64 flex-shrink-0 flex flex-col">
+                <div class="h-20 flex items-center justify-center px-6 flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-white">Rentily (Admin)</h1>
+                </div>
+                <nav class="flex-1 space-y-2 px-4 py-4 overflow-y-auto">
+                    <a href="#" class="sidebar-link active" onclick="showAdminTab('admin-users')">
+                        <i data-lucide="users"></i>
+                        <span>User Management</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showAdminTab('admin-properties')">
+                        <i data-lucide="home"></i>
+                        <span>All Properties</span>
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showAdminTab('admin-applications')">
+                        <i data-lucide="file-text"></i>
+                        <span>All Applications</span>
+                    </a>
+                </nav>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="#" class="sidebar-link" onclick="logout()">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </aside>
+            <!-- Main Content Area -->
+            <main class="flex-1 flex flex-col overflow-hidden">
+                <header class="h-20 bg-white border-b border-gray-200 flex-shrink-0 flex items-center justify-between px-8">
+                    <h2 id="admin-header" class="text-2xl font-semibold text-gray-800">User Management</h2>
+                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=A" alt="User Avatar" class="w-10 h-10 rounded-full">
+                </header>
+                <div class="flex-1 overflow-y-auto p-8">
+                    <!-- User Management Tab -->
+                    <div id="admin-users" class="admin-tab active">
+                        <div class="content-card">
+                            <h3 class="text-xl font-semibold mb-4">All Users</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-3">John Doe</td>
+                                        <td class="p-3">john@example.com</td>
+                                        <td class="p-3">Landlord</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Active</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">Edit</button>
+                                            <button class="text-red-600 hover:underline">Deactivate</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">Jane Smith</td>
+                                        <td class="p-3">jane@example.com</td>
+                                        <td class="p-3">Tenant</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Active</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">Edit</button>
+                                            <button class="text-red-600 hover:underline">Deactivate</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Properties Management Tab -->
+                    <div id="admin-properties" class="admin-tab hidden">
+                        <div class="content-card">
+                            <h3 class="text-xl font-semibold mb-4">All Properties</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>Landlord</th>
+                                        <th>Rent</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-3">123 Main St, Apt 4B</td>
+                                        <td class="p-3">John Doe</td>
+                                        <td class="p-3">$1,800</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Occupied</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">View</button>
+                                            <button class="text-red-600 hover:underline">Remove</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">456 Oak Avenue</td>
+                                        <td class="p-3">John Doe</td>
+                                        <td class="p-3">$2,400</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Available</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">View</button>
+                                            <button class="text-red-600 hover:underline">Remove</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Applications Management Tab -->
+                    <div id="admin-applications" class="admin-tab hidden">
+                        <div class="content-card">
+                            <h3 class="text-xl font-semibold mb-4">All Applications</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Applicant</th>
+                                        <th>Property</th>
+                                        <th>Submitted</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-3">John Doe</td>
+                                        <td class="p-3">123 Main St, Apt 4B</td>
+                                        <td class="p-3">Oct 30, 2025</td>
+                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span></td>
+                                        <td class="p-3 text-right">
+                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
+                                            <button class="text-green-600 hover:underline">Approve</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Help Button -->
+        <div class="help-button" onclick="showAdminTour()">
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
+        </div>
+    </div>
+
+
+    <!-- 
+      ======================================================================
+      MODALS (Hidden by default)
+      ======================================================================
+    -->
+    <div id="add-property-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-2xl">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">Add New Property</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('add-property-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-6">
+                <input type="text" class="form-input" placeholder="Property Address">
+                <input type="number" class="form-input" placeholder="Monthly Rent ($)">
+                <textarea class="form-input" rows="4" placeholder="Description"></textarea>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Property Photos</label>
+                    <input type="file" class="form-input" multiple>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Documents (Lease, etc)</label>
+                    <input type="file" class="form-input" multiple>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="btn-secondary" onclick="hideModal('add-property-modal')">Cancel</button>
+                    <button type="button" class="btn-primary">Add Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      TOUR MODALS
+      ======================================================================
+    -->
+    <div id="landlord-tour-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-2xl">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">🏠 Landlord Dashboard Tour</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('landlord-tour-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="content-card info">
+                        <h4 class="font-semibold mb-2">📊 Properties Management</h4>
+                        <p class="text-sm">View all your properties, add new ones, and manage property details.</p>
+                    </div>
+                    <div class="content-card success">
+                        <h4 class="font-semibold mb-2">📝 Tenant Applications</h4>
+                        <p class="text-sm">Review and process rental applications from prospective tenants.</p>
+                    </div>
+                    <div class="content-card warning">
+                        <h4 class="font-semibold mb-2">💬 Messaging System</h4>
+                        <p class="text-sm">Communicate directly with tenants about maintenance, payments, and more.</p>
+                    </div>
+                    <div class="content-card domain-tech">
+                        <h4 class="font-semibold mb-2">🔧 Service Requests</h4>
+                        <p class="text-sm">Track and manage maintenance requests from tenants.</p>
+                    </div>
+                </div>
+                <div class="content-card domain-finance">
+                    <h4 class="font-semibold mb-2">💳 Billing & Subscriptions</h4>
+                    <p class="text-sm">Manage your Rentily subscription and view billing information.</p>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button class="btn-primary" onclick="hideModal('landlord-tour-modal')">
+                        Start Exploring
+                        <i data-lucide="arrow-right" class="inline-block ml-2 w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tenant-tour-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-2xl">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">👤 Tenant Dashboard Tour</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('tenant-tour-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="content-card info">
+                        <h4 class="font-semibold mb-2">🏠 Apply for Properties</h4>
+                        <p class="text-sm">Browse available properties and submit rental applications online.</p>
+                    </div>
+                    <div class="content-card success">
+                        <h4 class="font-semibold mb-2">📋 Application Status</h4>
+                        <p class="text-sm">Track the status of your rental applications in real-time.</p>
+                    </div>
+                    <div class="content-card warning">
+                        <h4 class="font-semibold mb-2">💬 Landlord Communication</h4>
+                        <p class="text-sm">Message your landlord directly through the platform.</p>
+                    </div>
+                    <div class="content-card domain-tech">
+                        <h4 class="font-semibold mb-2">🔧 Service Requests</h4>
+                        <p class="text-sm">Submit maintenance requests and track their progress.</p>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button class="btn-primary" onclick="hideModal('tenant-tour-modal')">
+                        Start Exploring
+                        <i data-lucide="arrow-right" class="inline-block ml-2 w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-tour-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-2xl">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">⚙️ Admin Dashboard Tour</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('admin-tour-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="content-card info">
+                        <h4 class="font-semibold mb-2">👥 User Management</h4>
+                        <p class="text-sm">Manage all users (landlords and tenants) across the platform.</p>
+                    </div>
+                    <div class="content-card success">
+                        <h4 class="font-semibold mb-2">🏘️ All Properties</h4>
+                        <p class="text-sm">View and manage all properties listed on the platform.</p>
+                    </div>
+                    <div class="content-card warning">
+                        <h4 class="font-semibold mb-2">📄 Application Oversight</h4>
+                        <p class="text-sm">Monitor all rental applications across the platform.</p>
+                    </div>
+                    <div class="content-card domain-tech">
+                        <h4 class="font-semibold mb-2">📊 Platform Analytics</h4>
+                        <p class="text-sm">Access system-wide analytics and performance metrics.</p>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button class="btn-primary" onclick="hideModal('admin-tour-modal')">
+                        Start Exploring
+                        <i data-lucide="arrow-right" class="inline-block ml-2 w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+      ======================================================================
+      JAVASCRIPT
+      ======================================================================
+    -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Show demo instructions on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showModal('demo-instructions-modal');
+        });
+
+        // --- Demo Start Function ---
+        function startDemo() {
+            const dontShowAgain = document.getElementById('dont-show-again').checked;
+            if (dontShowAgain) {
+                localStorage.setItem('rentily-demo-instructions-shown', 'true');
+            }
+            hideModal('demo-instructions-modal');
+            showPage('auth-page');
+        }
+
+        // Check if instructions should be shown
+        if (localStorage.getItem('rentily-demo-instructions-shown') === 'true') {
+            document.addEventListener('DOMContentLoaded', function() {
+                showPage('auth-page');
+            });
+        }
+
+        // --- Page Navigation ---
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Show the target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+        }
+
+        // --- Authentication Logic (Placeholder) ---
+        function login() {
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // ARCHITECT'S NOTE: This is where you would connect to Xano or Supabase
+            // For this MVP, we just route to the correct dashboard.
+            
+            if (role === 'landlord') {
+                showPage('landlord-dashboard');
+                setTimeout(() => showModal('landlord-tour-modal'), 500);
+            } else if (role === 'tenant') {
+                showPage('tenant-dashboard');
+                setTimeout(() => showModal('tenant-tour-modal'), 500);
+            } else if (role === 'admin') {
+                showPage('admin-dashboard');
+                setTimeout(() => showModal('admin-tour-modal'), 500);
+            }
+        }
+
+        function logout() {
+            showPage('auth-page');
+            // Clear session/token here
+        }
+
+        // --- Dashboard Tab Navigation ---
+        function showLandlordTab(tabId) {
+            // Update header
+            const headers = {
+                'landlord-properties': 'My Properties',
+                'landlord-applications': 'Applications',
+                'landlord-messages': 'Messages',
+                'landlord-requests': 'Service Requests',
+                'landlord-billing': 'Billing',
+            };
+            document.getElementById('landlord-header').textContent = headers[tabId] || 'Dashboard';
+
+            // Update active link
+            document.querySelectorAll('#landlord-dashboard .sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(tabId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Show target tab
+            document.querySelectorAll('.landlord-tab').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        function showTenantTab(tabId) {
+            // Similar logic for tenant dashboard
+            const headers = {
+                'tenant-apply': 'Apply for Property',
+                'tenant-status': 'My Applications',
+                'tenant-messages': 'Messages',
+                'tenant-service': 'Submit Service Request',
+            };
+            document.getElementById('tenant-header').textContent = headers[tabId] || 'Dashboard';
+
+            document.querySelectorAll('#tenant-dashboard .sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(tabId)) {
+                    link.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.tenant-tab').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        function showAdminTab(tabId) {
+            // Similar logic for admin dashboard
+            const headers = {
+                'admin-users': 'User Management',
+                'admin-properties': 'All Properties',
+                'admin-applications': 'All Applications',
+            };
+            document.getElementById('admin-header').textContent = headers[tabId] || 'Dashboard';
+            
+            document.querySelectorAll('#admin-dashboard .sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(tabId)) {
+                    link.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // --- Modal Logic ---
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+        
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- Tour Functions ---
+        function showLandlordTour() {
+            showModal('landlord-tour-modal');
+        }
+        
+        function showTenantTour() {
+            showModal('tenant-tour-modal');
+        }
+        
+        function showAdminTour() {
+            showModal('admin-tour-modal');
+        }
+
+    </script>
+
+</body>
+</html>
