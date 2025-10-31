@@ -256,74 +256,74 @@
             transform: scale(1.05);
         }
         
-        /* Tour step styling */
-        .tour-step {
-            position: absolute;
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            padding: 1.5rem;
-            max-width: 320px;
-            z-index: 1000;
+        /* Message styling */
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
         }
         
-        .tour-step::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-style: solid;
+        .message-bubble.sent {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
         }
         
-        .tour-step.top::after {
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 10px 10px 0 10px;
-            border-color: white transparent transparent transparent;
+        .message-bubble.received {
+            background-color: #E5E7EB;
+            color: var(--text-primary);
+            margin-right: auto;
+            border-bottom-left-radius: 0.25rem;
         }
         
-        .tour-step.bottom::after {
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 10px 10px 10px;
-            border-color: transparent transparent white transparent;
+        /* Status badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         
-        .tour-step.left::after {
-            right: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-width: 10px 0 10px 10px;
-            border-color: transparent transparent transparent white;
+        .status-pending {
+            background-color: #FEF3C7;
+            color: #92400E;
         }
         
-        .tour-step.right::after {
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-width: 10px 10px 10px 0;
-            border-color: transparent white transparent transparent;
+        .status-approved {
+            background-color: #D1FAE5;
+            color: #065F46;
         }
         
-        .tour-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+        .status-rejected {
+            background-color: #FEE2E2;
+            color: #991B1B;
         }
         
-        /* Feature highlight */
-        .feature-highlight {
-            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.5);
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1001;
+        .status-in-progress {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        
+        .status-completed {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
     </style>
@@ -347,7 +347,7 @@
             <div class="p-6 space-y-6">
                 <div class="content-card info">
                     <h4 class="text-lg font-semibold mb-3">Welcome to the Rentily MVP Demo!</h4>
-                    <p>This is a fully functional prototype of a property management platform built with modern web technologies. Explore the features designed for landlords, tenants, and administrators.</p>
+                    <p>This is a fully functional prototype of a property management platform with simulated backend functionality. All data is persisted in your browser's localStorage.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -356,8 +356,8 @@
                         <ul class="text-sm space-y-1">
                             <li>• Select your role below to access different dashboards</li>
                             <li>• Click the <span class="font-semibold">?</span> button for contextual help</li>
-                            <li>• Try all interactive features</li>
-                            <li>• No real data is being saved</li>
+                            <li>• All data is saved locally in your browser</li>
+                            <li>• Try the interactive messaging system</li>
                         </ul>
                     </div>
                     
@@ -374,22 +374,23 @@
                             <li>• Multi-role dashboards</li>
                             <li>• Property management</li>
                             <li>• Tenant applications</li>
-                            <li>• In-app messaging</li>
+                            <li>• Real-time messaging</li>
                             <li>• Service requests</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="content-card warning">
-                    <h4 class="font-semibold mb-2">📝 About This MVP</h4>
-                    <p class="text-sm">This demo showcases the core functionality that would be built with WeWeb + Xano/Supabase. The actual implementation would include:</p>
+                    <h4 class="font-semibold mb-2">💾 Data Persistence</h4>
+                    <p class="text-sm">This demo uses your browser's localStorage to save:</p>
                     <ul class="text-sm mt-2 space-y-1">
-                        <li>• Real backend integration with Xano/Supabase</li>
-                        <li>• Actual user authentication</li>
-                        <li>• Live data persistence</li>
-                        <li>• Stripe payment integration</li>
-                        <li>• File upload functionality</li>
+                        <li>• User accounts and profiles</li>
+                        <li>• Property listings</li>
+                        <li>• Rental applications</li>
+                        <li>• Message conversations</li>
+                        <li>• Service requests</li>
                     </ul>
+                    <p class="text-sm mt-2">Data will persist between sessions until you clear your browser data.</p>
                 </div>
                 
                 <div class="flex justify-between items-center pt-4 border-t">
@@ -458,7 +459,7 @@
                             <button type="button" class="btn-primary w-full" onclick="login()">Sign In</button>
                         </div>
                         <p class="text-center text-sm text-gray-600">
-                            Don't have an account? <a href="#" class="font-medium text-blue-700 hover:underline">Sign up</a>
+                            Don't have an account? <a href="#" class="font-medium text-blue-700 hover:underline" onclick="showModal('signup-modal')">Sign up</a>
                         </p>
                     </form>
                 </div>
@@ -518,7 +519,10 @@
                             <i data-lucide="plus" class="inline-block -ml-1 mr-2 w-5 h-5"></i>
                             Add Property
                         </button>
-                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sm text-gray-600" id="landlord-user-name">Loading...</span>
+                            <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                        </div>
                     </div>
                 </header>
 
@@ -527,44 +531,8 @@
                     
                     <!-- Properties Tab -->
                     <div id="landlord-properties" class="landlord-tab active">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Property Card Example -->
-                            <div class="content-card domain-operations">
-                                <img src="https://placehold.co/600x400/1E40AF/FFFFFF?text=Property" alt="Property Image" class="h-48 w-full object-cover rounded-t-lg">
-                                <div class="p-5">
-                                    <h3 class="text-xl font-bold mb-2">123 Main St, Apt 4B</h3>
-                                    <p class="text-gray-600 mb-4">A beautiful 2-bed, 1-bath apartment in the heart of downtown.</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-lg font-semibold text-gray-800">$1,800 / mo</span>
-                                        <div class="flex space-x-2">
-                                            <button class="text-gray-500 hover:text-blue-600"><i data-lucide="edit-2" class="w-5 h-5"></i></button>
-                                            <button class="text-gray-500 hover:text-red-600"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Second Property Card -->
-                            <div class="content-card domain-operations">
-                                <img src="https://placehold.co/600x400/7C3AED/FFFFFF?text=Property" alt="Property Image" class="h-48 w-full object-cover rounded-t-lg">
-                                <div class="p-5">
-                                    <h3 class="text-xl font-bold mb-2">456 Oak Avenue</h3>
-                                    <p class="text-gray-600 mb-4">Spacious 3-bedroom house with backyard and garage.</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-lg font-semibold text-gray-800">$2,400 / mo</span>
-                                        <div class="flex space-x-2">
-                                            <button class="text-gray-500 hover:text-blue-600"><i data-lucide="edit-2" class="w-5 h-5"></i></button>
-                                            <button class="text-gray-500 hover:text-red-600"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Add Property Card -->
-                            <div class="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-gray-50 transition-colors" onclick="showModal('add-property-modal')">
-                                <i data-lucide="plus" class="w-12 h-12 text-gray-400 mb-4"></i>
-                                <p class="text-gray-500 font-medium">Add New Property</p>
-                            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="landlord-properties-list">
+                            <!-- Properties will be dynamically loaded here -->
                         </div>
                     </div>
 
@@ -572,79 +540,29 @@
                     <div id="landlord-applications" class="landlord-tab hidden">
                         <div class="content-card domain-hr">
                             <h3 class="text-xl font-semibold mb-4">Pending Applications</h3>
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Applicant</th>
-                                        <th>Property</th>
-                                        <th>Submitted</th>
-                                        <th>Status</th>
-                                        <th class="text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-3">John Doe</td>
-                                        <td class="p-3">123 Main St, Apt 4B</td>
-                                        <td class="p-3">Oct 30, 2025</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
-                                            <button class="text-green-600 hover:underline">Approve</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">Jane Smith</td>
-                                        <td class="p-3">456 Oak Avenue</td>
-                                        <td class="p-3">Oct 29, 2025</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Under Review</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
-                                            <button class="text-green-600 hover:underline">Approve</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div id="landlord-applications-list">
+                                <!-- Applications will be dynamically loaded here -->
+                            </div>
                         </div>
                     </div>
 
                     <!-- Messages Tab -->
                     <div id="landlord-messages" class="landlord-tab hidden">
-                        <!-- In-app messaging UI -->
                         <div class="content-card domain-sales flex" style="height: 600px;">
                             <div class="w-1/3 border-r">
                                 <div class="p-4 border-b font-semibold">Contacts</div>
-                                <ul class="overflow-y-auto">
-                                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b">
-                                        <p class="font-medium">John Doe (123 Main St)</p>
-                                        <p class="text-sm text-gray-500 truncate">Hey, I have a quick question about the lease terms...</p>
-                                    </li>
-                                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b">
-                                        <p class="font-medium">Jane Smith (456 Oak Ave)</p>
-                                        <p class="text-sm text-gray-500 truncate">Thanks for approving my application!</p>
-                                    </li>
+                                <ul class="overflow-y-auto" id="landlord-contacts-list">
+                                    <!-- Contacts will be dynamically loaded here -->
                                 </ul>
                             </div>
                             <div class="w-2/3 flex flex-col">
-                                <div class="p-4 border-b font-semibold">John Doe</div>
-                                <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50">
-                                    <!-- Chat bubbles -->
-                                    <div class="flex justify-start">
-                                        <div class="bg-white rounded-lg p-3 max-w-xs shadow-sm">
-                                            <p class="text-sm">Hi, I have a question about the security deposit.</p>
-                                            <span class="text-xs text-gray-500 mt-1 block">10:24 AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <div class="bg-blue-100 rounded-lg p-3 max-w-xs shadow-sm">
-                                            <p class="text-sm">Sure, what would you like to know?</p>
-                                            <span class="text-xs text-gray-500 mt-1 block">10:25 AM</span>
-                                        </div>
-                                    </div>
+                                <div class="p-4 border-b font-semibold" id="landlord-chat-header">Select a conversation</div>
+                                <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50" id="landlord-messages-list">
+                                    <!-- Messages will be dynamically loaded here -->
                                 </div>
-                                <div class="p-4 border-t bg-white flex">
-                                    <input type="text" class="form-input flex-1 mr-2" placeholder="Type your message...">
-                                    <button class="btn-primary">Send</button>
+                                <div class="p-4 border-t bg-white flex hidden" id="landlord-message-input">
+                                    <input type="text" class="form-input flex-1 mr-2" placeholder="Type your message..." id="landlord-new-message">
+                                    <button class="btn-primary" onclick="sendMessageAsLandlord()">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -653,30 +571,9 @@
                     <!-- Service Requests Tab -->
                     <div id="landlord-requests" class="landlord-tab hidden">
                          <div class="content-card domain-tech">
-                            <h3 class="text-xl font-semibold mb-4">Open Service Requests</h3>
-                            <div class="space-y-4">
-                                <div class="border rounded-lg p-4 flex justify-between items-center">
-                                    <div>
-                                        <h4 class="font-semibold">Plumbing Issue</h4>
-                                        <p class="text-sm text-gray-600">Kitchen sink is leaking</p>
-                                        <span class="text-xs text-gray-500">Submitted: Oct 28, 2025</span>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span>
-                                        <button class="btn-secondary text-sm">View Details</button>
-                                    </div>
-                                </div>
-                                <div class="border rounded-lg p-4 flex justify-between items-center">
-                                    <div>
-                                        <h4 class="font-semibold">AC Not Working</h4>
-                                        <p class="text-sm text-gray-600">Air conditioning unit making strange noise</p>
-                                        <span class="text-xs text-gray-500">Submitted: Oct 25, 2025</span>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">In Progress</span>
-                                        <button class="btn-secondary text-sm">View Details</button>
-                                    </div>
-                                </div>
+                            <h3 class="text-xl font-semibold mb-4">Service Requests</h3>
+                            <div class="space-y-4" id="landlord-requests-list">
+                                <!-- Service requests will be dynamically loaded here -->
                             </div>
                         </div>
                     </div>
@@ -688,8 +585,8 @@
                             <p class="text-gray-600 mb-4">You are currently on the <strong>Pro Plan</strong> ($49/mo).</p>
                             <div class="bg-gray-50 p-4 rounded-lg mb-6">
                                 <h4 class="font-semibold mb-2">Current Usage</h4>
-                                <p>Properties: 2/10</p>
-                                <p>Active Tenants: 1/25</p>
+                                <p>Properties: <span id="landlord-properties-count">0</span>/10</p>
+                                <p>Active Tenants: <span id="landlord-tenants-count">0</span>/25</p>
                             </div>
                             <button class="btn-secondary mr-4">Manage Subscription (via Stripe)</button>
                             <button class="btn-primary">Upgrade Plan</button>
@@ -749,7 +646,10 @@
             <main class="flex-1 flex flex-col overflow-hidden">
                 <header class="h-20 bg-white border-b border-gray-200 flex-shrink-0 flex items-center justify-between px-8">
                     <h2 id="tenant-header" class="text-2xl font-semibold text-gray-800">Apply for Property</h2>
-                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm text-gray-600" id="tenant-user-name">Loading...</span>
+                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    </div>
                 </header>
 
                 <div class="flex-1 overflow-y-auto p-8">
@@ -757,40 +657,39 @@
                     <div id="tenant-apply" class="tenant-tab active">
                         <div class="content-card max-w-2xl mx-auto">
                             <h3 class="text-2xl font-semibold mb-6">Rental Application</h3>
-                            <form class="space-y-6">
+                            <form class="space-y-6" id="tenant-application-form">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Property Address</label>
-                                    <select class="form-input">
+                                    <select class="form-input" id="application-property" required>
                                         <option value="">Select a property</option>
-                                        <option value="1">123 Main St, Apt 4B</option>
-                                        <option value="2">456 Oak Avenue</option>
+                                        <!-- Properties will be dynamically loaded -->
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Your Full Name</label>
-                                    <input type="text" class="form-input" placeholder="John Doe">
+                                    <input type="text" class="form-input" placeholder="John Doe" id="application-name" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
-                                    <input type="email" class="form-input" placeholder="john.doe@example.com">
+                                    <input type="email" class="form-input" placeholder="john.doe@example.com" id="application-email" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                    <input type="tel" class="form-input" placeholder="(123) 456-7890">
+                                    <input type="tel" class="form-input" placeholder="(123) 456-7890" id="application-phone" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Current Address</label>
-                                    <input type="text" class="form-input" placeholder="123 Current St, City, State">
+                                    <input type="text" class="form-input" placeholder="123 Current St, City, State" id="application-current-address" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Monthly Income</label>
-                                    <input type="number" class="form-input" placeholder="5000">
+                                    <input type="number" class="form-input" placeholder="5000" id="application-income" required>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Documents (ID, Paystubs, etc.)</label>
-                                    <input type="file" class="form-input" multiple>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
+                                    <textarea class="form-input" rows="3" placeholder="Tell us about yourself, pets, etc." id="application-notes"></textarea>
                                 </div>
-                                <button type="button" class="btn-primary w-full">Submit Application</button>
+                                <button type="button" class="btn-primary w-full" onclick="submitApplication()">Submit Application</button>
                             </form>
                         </div>
                     </div>
@@ -799,25 +698,31 @@
                     <div id="tenant-status" class="tenant-tab hidden">
                         <div class="content-card max-w-2xl mx-auto">
                             <h3 class="text-2xl font-semibold mb-6">My Applications</h3>
-                            <div class="space-y-4">
-                                <div class="border rounded-lg p-4">
-                                    <div class="flex justify-between items-center">
-                                        <h4 class="font-semibold">123 Main St, Apt 4B</h4>
-                                        <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mt-2">Submitted: Oct 30, 2025</p>
-                                    <button class="btn-secondary mt-3">View Details</button>
-                                </div>
+                            <div class="space-y-4" id="tenant-applications-list">
+                                <!-- Applications will be dynamically loaded here -->
                             </div>
                         </div>
                     </div>
                     
                     <!-- Messages Tab -->
                     <div id="tenant-messages" class="tenant-tab hidden">
-                        <div class="content-card">
-                            <h3 class="text-2xl font-semibold mb-6">Messages</h3>
-                            <!-- Similar messaging UI as landlord dashboard -->
-                            <p class="text-gray-600">No messages yet. Contact your landlord with any questions.</p>
+                        <div class="content-card domain-sales flex" style="height: 600px;">
+                            <div class="w-1/3 border-r">
+                                <div class="p-4 border-b font-semibold">Contacts</div>
+                                <ul class="overflow-y-auto" id="tenant-contacts-list">
+                                    <!-- Contacts will be dynamically loaded here -->
+                                </ul>
+                            </div>
+                            <div class="w-2/3 flex flex-col">
+                                <div class="p-4 border-b font-semibold" id="tenant-chat-header">Select a conversation</div>
+                                <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50" id="tenant-messages-list">
+                                    <!-- Messages will be dynamically loaded here -->
+                                </div>
+                                <div class="p-4 border-t bg-white flex hidden" id="tenant-message-input">
+                                    <input type="text" class="form-input flex-1 mr-2" placeholder="Type your message..." id="tenant-new-message">
+                                    <button class="btn-primary" onclick="sendMessageAsTenant()">Send</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -825,10 +730,17 @@
                     <div id="tenant-service" class="tenant-tab hidden">
                         <div class="content-card max-w-2xl mx-auto">
                             <h3 class="text-2xl font-semibold mb-6">Submit Service Request</h3>
-                            <form class="space-y-6">
+                            <form class="space-y-6" id="service-request-form">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Property</label>
+                                    <select class="form-input" id="request-property" required>
+                                        <option value="">Select property</option>
+                                        <!-- Properties will be dynamically loaded -->
+                                    </select>
+                                </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Request Type</label>
-                                    <select class="form-input">
+                                    <select class="form-input" id="request-type" required>
                                         <option value="">Select type</option>
                                         <option value="plumbing">Plumbing</option>
                                         <option value="electrical">Electrical</option>
@@ -839,13 +751,17 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                    <textarea class="form-input" rows="4" placeholder="Please describe the issue in detail..."></textarea>
+                                    <textarea class="form-input" rows="4" placeholder="Please describe the issue in detail..." id="request-description" required></textarea>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Photos (Optional)</label>
-                                    <input type="file" class="form-input" multiple>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Urgency</label>
+                                    <select class="form-input" id="request-urgency" required>
+                                        <option value="low">Low - Can wait a few days</option>
+                                        <option value="medium">Medium - Should be addressed soon</option>
+                                        <option value="high">High - Needs immediate attention</option>
+                                    </select>
                                 </div>
-                                <button type="button" class="btn-primary w-full">Submit Request</button>
+                                <button type="button" class="btn-primary w-full" onclick="submitServiceRequest()">Submit Request</button>
                             </form>
                         </div>
                     </div>
@@ -897,7 +813,10 @@
             <main class="flex-1 flex flex-col overflow-hidden">
                 <header class="h-20 bg-white border-b border-gray-200 flex-shrink-0 flex items-center justify-between px-8">
                     <h2 id="admin-header" class="text-2xl font-semibold text-gray-800">User Management</h2>
-                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=A" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm text-gray-600" id="admin-user-name">Loading...</span>
+                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=A" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    </div>
                 </header>
                 <div class="flex-1 overflow-y-auto p-8">
                     <!-- User Management Tab -->
@@ -914,27 +833,8 @@
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-3">John Doe</td>
-                                        <td class="p-3">john@example.com</td>
-                                        <td class="p-3">Landlord</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Active</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">Edit</button>
-                                            <button class="text-red-600 hover:underline">Deactivate</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">Jane Smith</td>
-                                        <td class="p-3">jane@example.com</td>
-                                        <td class="p-3">Tenant</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Active</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">Edit</button>
-                                            <button class="text-red-600 hover:underline">Deactivate</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="admin-users-list">
+                                    <!-- Users will be dynamically loaded here -->
                                 </tbody>
                             </table>
                         </div>
@@ -954,27 +854,8 @@
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-3">123 Main St, Apt 4B</td>
-                                        <td class="p-3">John Doe</td>
-                                        <td class="p-3">$1,800</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Occupied</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">View</button>
-                                            <button class="text-red-600 hover:underline">Remove</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">456 Oak Avenue</td>
-                                        <td class="p-3">John Doe</td>
-                                        <td class="p-3">$2,400</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Available</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">View</button>
-                                            <button class="text-red-600 hover:underline">Remove</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="admin-properties-list">
+                                    <!-- Properties will be dynamically loaded here -->
                                 </tbody>
                             </table>
                         </div>
@@ -994,17 +875,8 @@
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-3">John Doe</td>
-                                        <td class="p-3">123 Main St, Apt 4B</td>
-                                        <td class="p-3">Oct 30, 2025</td>
-                                        <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium">Pending</span></td>
-                                        <td class="p-3 text-right">
-                                            <button class="text-blue-600 hover:underline mr-3">Review</button>
-                                            <button class="text-green-600 hover:underline">Approve</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="admin-applications-list">
+                                    <!-- Applications will be dynamically loaded here -->
                                 </tbody>
                             </table>
                         </div>
@@ -1022,7 +894,7 @@
 
     <!-- 
       ======================================================================
-      MODALS (Hidden by default)
+      MODALS
       ======================================================================
     -->
     <div id="add-property-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
@@ -1033,21 +905,54 @@
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
-            <form class="p-6 space-y-6">
-                <input type="text" class="form-input" placeholder="Property Address">
-                <input type="number" class="form-input" placeholder="Monthly Rent ($)">
-                <textarea class="form-input" rows="4" placeholder="Description"></textarea>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Property Photos</label>
-                    <input type="file" class="form-input" multiple>
+            <form class="p-6 space-y-6" id="add-property-form">
+                <input type="text" class="form-input" placeholder="Property Address" id="property-address" required>
+                <input type="number" class="form-input" placeholder="Monthly Rent ($)" id="property-rent" required>
+                <textarea class="form-input" rows="4" placeholder="Description" id="property-description" required></textarea>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="number" class="form-input" placeholder="Bedrooms" id="property-bedrooms" required>
+                    <input type="number" class="form-input" placeholder="Bathrooms" id="property-bathrooms" required>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Documents (Lease, etc)</label>
-                    <input type="file" class="form-input" multiple>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="number" class="form-input" placeholder="Square Feet" id="property-sqft">
+                    <input type="text" class="form-input" placeholder="Property Type" id="property-type" required>
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" class="btn-secondary" onclick="hideModal('add-property-modal')">Cancel</button>
-                    <button type="button" class="btn-primary">Add Property</button>
+                    <button type="button" class="btn-primary" onclick="addProperty()">Add Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="content-card w-full max-w-md">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-2xl font-semibold">Create Account</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideModal('signup-modal')">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-6" id="signup-form">
+                <input type="text" class="form-input" placeholder="Full Name" id="signup-name" required>
+                <input type="email" class="form-input" placeholder="Email Address" id="signup-email" required>
+                <input type="password" class="form-input" placeholder="Password" id="signup-password" required>
+                <div class="flex items-center justify-between">
+                    <label class="text-sm font-medium text-gray-700">Account Type:</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-1 cursor-pointer">
+                            <input type="radio" name="signup-role" value="tenant" class="form-radio text-blue-600" checked>
+                            <span class="text-sm">Tenant</span>
+                        </label>
+                        <label class="flex items-center space-x-1 cursor-pointer">
+                            <input type="radio" name="signup-role" value="landlord" class="form-radio text-blue-600">
+                            <span class="text-sm">Landlord</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="btn-secondary" onclick="hideModal('signup-modal')">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="createAccount()">Create Account</button>
                 </div>
             </form>
         </div>
@@ -1175,16 +1080,1029 @@
 
     <!-- 
       ======================================================================
-      JAVASCRIPT
+      JAVASCRIPT - BACKEND SIMULATION
       ======================================================================
     -->
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
 
+        // =========================================================================
+        // DATA STORAGE AND BACKEND SIMULATION
+        // =========================================================================
+
+        // Data structure for the application
+        const RentilyDB = {
+            // Initialize data if not exists
+            init: function() {
+                if (!localStorage.getItem('rentily-users')) {
+                    this.initializeSampleData();
+                }
+            },
+
+            // Initialize with sample data
+            initializeSampleData: function() {
+                const sampleData = {
+                    users: [
+                        {
+                            id: 1,
+                            name: 'John Landlord',
+                            email: 'landlord@example.com',
+                            password: 'password',
+                            role: 'landlord',
+                            avatar: 'https://placehold.co/40x40/E2E8F0/4A5568?text=JL',
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 2,
+                            name: 'Jane Tenant',
+                            email: 'tenant@example.com',
+                            password: 'password',
+                            role: 'tenant',
+                            avatar: 'https://placehold.co/40x40/E2E8F0/4A5568?text=JT',
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 3,
+                            name: 'Admin User',
+                            email: 'admin@example.com',
+                            password: 'password',
+                            role: 'admin',
+                            avatar: 'https://placehold.co/40x40/E2E8F0/4A5568?text=AU',
+                            createdAt: new Date().toISOString()
+                        }
+                    ],
+                    properties: [
+                        {
+                            id: 1,
+                            landlordId: 1,
+                            address: '123 Main St, Apt 4B',
+                            rent: 1800,
+                            description: 'A beautiful 2-bed, 1-bath apartment in the heart of downtown.',
+                            bedrooms: 2,
+                            bathrooms: 1,
+                            sqft: 950,
+                            type: 'Apartment',
+                            status: 'available',
+                            images: ['https://placehold.co/600x400/1E40AF/FFFFFF?text=Property'],
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 2,
+                            landlordId: 1,
+                            address: '456 Oak Avenue',
+                            rent: 2400,
+                            description: 'Spacious 3-bedroom house with backyard and garage.',
+                            bedrooms: 3,
+                            bathrooms: 2,
+                            sqft: 1500,
+                            type: 'House',
+                            status: 'available',
+                            images: ['https://placehold.co/600x400/7C3AED/FFFFFF?text=Property'],
+                            createdAt: new Date().toISOString()
+                        }
+                    ],
+                    applications: [
+                        {
+                            id: 1,
+                            tenantId: 2,
+                            propertyId: 1,
+                            name: 'Jane Tenant',
+                            email: 'tenant@example.com',
+                            phone: '(555) 123-4567',
+                            currentAddress: '789 Previous St, City, State',
+                            income: 60000,
+                            notes: 'Looking to move closer to work.',
+                            status: 'pending',
+                            submittedAt: new Date().toISOString()
+                        }
+                    ],
+                    messages: [
+                        {
+                            id: 1,
+                            senderId: 2,
+                            receiverId: 1,
+                            content: 'Hi, I have a question about the security deposit.',
+                            timestamp: new Date(Date.now() - 3600000).toISOString(),
+                            read: true
+                        },
+                        {
+                            id: 2,
+                            senderId: 1,
+                            receiverId: 2,
+                            content: 'Sure, what would you like to know?',
+                            timestamp: new Date(Date.now() - 1800000).toISOString(),
+                            read: true
+                        },
+                        {
+                            id: 3,
+                            senderId: 2,
+                            receiverId: 1,
+                            content: 'Is the security deposit refundable?',
+                            timestamp: new Date().toISOString(),
+                            read: false
+                        }
+                    ],
+                    serviceRequests: [
+                        {
+                            id: 1,
+                            tenantId: 2,
+                            propertyId: 1,
+                            type: 'plumbing',
+                            description: 'Kitchen sink is leaking',
+                            urgency: 'medium',
+                            status: 'pending',
+                            submittedAt: new Date(Date.now() - 86400000).toISOString()
+                        },
+                        {
+                            id: 2,
+                            tenantId: 2,
+                            propertyId: 1,
+                            type: 'heating',
+                            description: 'Air conditioning unit making strange noise',
+                            urgency: 'high',
+                            status: 'in-progress',
+                            submittedAt: new Date(Date.now() - 172800000).toISOString()
+                        }
+                    ]
+                };
+
+                this.saveData(sampleData);
+            },
+
+            // Save data to localStorage
+            saveData: function(data) {
+                localStorage.setItem('rentily-users', JSON.stringify(data.users || []));
+                localStorage.setItem('rentily-properties', JSON.stringify(data.properties || []));
+                localStorage.setItem('rentily-applications', JSON.stringify(data.applications || []));
+                localStorage.setItem('rentily-messages', JSON.stringify(data.messages || []));
+                localStorage.setItem('rentily-serviceRequests', JSON.stringify(data.serviceRequests || []));
+                localStorage.setItem('rentily-nextId', JSON.stringify(data.nextId || {
+                    users: 100,
+                    properties: 100,
+                    applications: 100,
+                    messages: 100,
+                    serviceRequests: 100
+                }));
+            },
+
+            // Load data from localStorage
+            loadData: function() {
+                const nextId = JSON.parse(localStorage.getItem('rentily-nextId') || '{}');
+                
+                return {
+                    users: JSON.parse(localStorage.getItem('rentily-users') || '[]'),
+                    properties: JSON.parse(localStorage.getItem('rentily-properties') || '[]'),
+                    applications: JSON.parse(localStorage.getItem('rentily-applications') || '[]'),
+                    messages: JSON.parse(localStorage.getItem('rentily-messages') || '[]'),
+                    serviceRequests: JSON.parse(localStorage.getItem('rentily-serviceRequests') || '[]'),
+                    nextId: nextId
+                };
+            },
+
+            // Get next ID for a specific entity type
+            getNextId: function(entityType) {
+                const data = this.loadData();
+                const id = data.nextId[entityType] || 1;
+                data.nextId[entityType] = id + 1;
+                this.saveData(data);
+                return id;
+            },
+
+            // User management
+            createUser: function(userData) {
+                const data = this.loadData();
+                const newUser = {
+                    id: this.getNextId('users'),
+                    ...userData,
+                    createdAt: new Date().toISOString()
+                };
+                data.users.push(newUser);
+                this.saveData(data);
+                return newUser;
+            },
+
+            findUserByEmail: function(email) {
+                const data = this.loadData();
+                return data.users.find(user => user.email === email);
+            },
+
+            findUserById: function(id) {
+                const data = this.loadData();
+                return data.users.find(user => user.id === id);
+            },
+
+            // Property management
+            createProperty: function(propertyData) {
+                const data = this.loadData();
+                const newProperty = {
+                    id: this.getNextId('properties'),
+                    ...propertyData,
+                    createdAt: new Date().toISOString()
+                };
+                data.properties.push(newProperty);
+                this.saveData(data);
+                return newProperty;
+            },
+
+            getPropertiesByLandlord: function(landlordId) {
+                const data = this.loadData();
+                return data.properties.filter(property => property.landlordId === landlordId);
+            },
+
+            getAllProperties: function() {
+                const data = this.loadData();
+                return data.properties;
+            },
+
+            // Application management
+            createApplication: function(applicationData) {
+                const data = this.loadData();
+                const newApplication = {
+                    id: this.getNextId('applications'),
+                    ...applicationData,
+                    submittedAt: new Date().toISOString(),
+                    status: 'pending'
+                };
+                data.applications.push(newApplication);
+                this.saveData(data);
+                return newApplication;
+            },
+
+            getApplicationsByTenant: function(tenantId) {
+                const data = this.loadData();
+                return data.applications.filter(app => app.tenantId === tenantId);
+            },
+
+            getApplicationsByLandlord: function(landlordId) {
+                const data = this.loadData();
+                const landlordProperties = data.properties.filter(p => p.landlordId === landlordId);
+                const propertyIds = landlordProperties.map(p => p.id);
+                return data.applications.filter(app => propertyIds.includes(app.propertyId));
+            },
+
+            getAllApplications: function() {
+                const data = this.loadData();
+                return data.applications;
+            },
+
+            updateApplicationStatus: function(applicationId, status) {
+                const data = this.loadData();
+                const application = data.applications.find(app => app.id === applicationId);
+                if (application) {
+                    application.status = status;
+                    this.saveData(data);
+                    return application;
+                }
+                return null;
+            },
+
+            // Message management
+            createMessage: function(messageData) {
+                const data = this.loadData();
+                const newMessage = {
+                    id: this.getNextId('messages'),
+                    ...messageData,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                };
+                data.messages.push(newMessage);
+                this.saveData(data);
+                return newMessage;
+            },
+
+            getMessagesBetweenUsers: function(user1Id, user2Id) {
+                const data = this.loadData();
+                return data.messages.filter(msg => 
+                    (msg.senderId === user1Id && msg.receiverId === user2Id) ||
+                    (msg.senderId === user2Id && msg.receiverId === user1Id)
+                ).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            },
+
+            getConversationPartners: function(userId) {
+                const data = this.loadData();
+                const partners = new Set();
+                
+                data.messages.forEach(msg => {
+                    if (msg.senderId === userId) {
+                        partners.add(msg.receiverId);
+                    } else if (msg.receiverId === userId) {
+                        partners.add(msg.senderId);
+                    }
+                });
+                
+                return Array.from(partners).map(partnerId => this.findUserById(partnerId));
+            },
+
+            // Service request management
+            createServiceRequest: function(requestData) {
+                const data = this.loadData();
+                const newRequest = {
+                    id: this.getNextId('serviceRequests'),
+                    ...requestData,
+                    submittedAt: new Date().toISOString(),
+                    status: 'pending'
+                };
+                data.serviceRequests.push(newRequest);
+                this.saveData(data);
+                return newRequest;
+            },
+
+            getServiceRequestsByTenant: function(tenantId) {
+                const data = this.loadData();
+                return data.serviceRequests.filter(req => req.tenantId === tenantId);
+            },
+
+            getServiceRequestsByLandlord: function(landlordId) {
+                const data = this.loadData();
+                const landlordProperties = data.properties.filter(p => p.landlordId === landlordId);
+                const propertyIds = landlordProperties.map(p => p.id);
+                return data.serviceRequests.filter(req => propertyIds.includes(req.propertyId));
+            },
+
+            updateServiceRequestStatus: function(requestId, status) {
+                const data = this.loadData();
+                const request = data.serviceRequests.find(req => req.id === requestId);
+                if (request) {
+                    request.status = status;
+                    this.saveData(data);
+                    return request;
+                }
+                return null;
+            }
+        };
+
+        // =========================================================================
+        // APPLICATION STATE MANAGEMENT
+        // =========================================================================
+
+        let currentUser = null;
+
+        // Initialize the application
+        function initApp() {
+            RentilyDB.init();
+            
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('rentily-current-user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                redirectToDashboard();
+            }
+            
+            // Show demo instructions on first load
+            if (!localStorage.getItem('rentily-demo-instructions-shown')) {
+                showModal('demo-instructions-modal');
+            }
+        }
+
+        // =========================================================================
+        // AUTHENTICATION FUNCTIONS
+        // =========================================================================
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // For demo purposes, we'll create a user if they don't exist
+            let user = RentilyDB.findUserByEmail(email);
+            
+            if (!user) {
+                // Create a new user for demo
+                user = RentilyDB.createUser({
+                    name: email.split('@')[0],
+                    email: email,
+                    password: password,
+                    role: role,
+                    avatar: `https://placehold.co/40x40/E2E8F0/4A5568?text=${email.charAt(0).toUpperCase()}`
+                });
+            }
+            
+            currentUser = user;
+            localStorage.setItem('rentily-current-user', JSON.stringify(user));
+            
+            redirectToDashboard();
+        }
+
+        function createAccount() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const role = document.querySelector('input[name="signup-role"]:checked').value;
+            
+            // Check if user already exists
+            if (RentilyDB.findUserByEmail(email)) {
+                alert('An account with this email already exists.');
+                return;
+            }
+            
+            // Create new user
+            const user = RentilyDB.createUser({
+                name: name,
+                email: email,
+                password: password,
+                role: role,
+                avatar: `https://placehold.co/40x40/E2E8F0/4A5568?text=${name.charAt(0).toUpperCase()}`
+            });
+            
+            currentUser = user;
+            localStorage.setItem('rentily-current-user', JSON.stringify(user));
+            
+            hideModal('signup-modal');
+            redirectToDashboard();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('rentily-current-user');
+            showPage('auth-page');
+        }
+
+        function redirectToDashboard() {
+            if (!currentUser) return;
+            
+            switch(currentUser.role) {
+                case 'landlord':
+                    showPage('landlord-dashboard');
+                    loadLandlordDashboard();
+                    setTimeout(() => showModal('landlord-tour-modal'), 500);
+                    break;
+                case 'tenant':
+                    showPage('tenant-dashboard');
+                    loadTenantDashboard();
+                    setTimeout(() => showModal('tenant-tour-modal'), 500);
+                    break;
+                case 'admin':
+                    showPage('admin-dashboard');
+                    loadAdminDashboard();
+                    setTimeout(() => showModal('admin-tour-modal'), 500);
+                    break;
+            }
+        }
+
+        // =========================================================================
+        // LANDLORD DASHBOARD FUNCTIONS
+        // =========================================================================
+
+        function loadLandlordDashboard() {
+            if (!currentUser) return;
+            
+            // Update user info
+            document.getElementById('landlord-user-name').textContent = currentUser.name;
+            
+            // Load properties
+            loadLandlordProperties();
+            
+            // Load applications
+            loadLandlordApplications();
+            
+            // Load messages
+            loadLandlordMessages();
+            
+            // Load service requests
+            loadLandlordServiceRequests();
+            
+            // Update counts
+            updateLandlordCounts();
+        }
+
+        function loadLandlordProperties() {
+            const properties = RentilyDB.getPropertiesByLandlord(currentUser.id);
+            const container = document.getElementById('landlord-properties-list');
+            
+            if (properties.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i data-lucide="home" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">No Properties Yet</h3>
+                        <p class="text-gray-600 mb-4">Get started by adding your first property.</p>
+                        <button class="btn-primary" onclick="showModal('add-property-modal')">
+                            <i data-lucide="plus" class="inline-block -ml-1 mr-2 w-5 h-5"></i>
+                            Add Your First Property
+                        </button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = properties.map(property => `
+                <div class="content-card domain-operations">
+                    <img src="${property.images[0]}" alt="Property Image" class="h-48 w-full object-cover rounded-t-lg">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-2">${property.address}</h3>
+                        <p class="text-gray-600 mb-4">${property.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold text-gray-800">$${property.rent} / mo</span>
+                            <div class="flex space-x-2">
+                                <button class="text-gray-500 hover:text-blue-600">
+                                    <i data-lucide="edit-2" class="w-5 h-5"></i>
+                                </button>
+                                <button class="text-gray-500 hover:text-red-600">
+                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-gray-50 transition-colors" onclick="showModal('add-property-modal')">
+                    <i data-lucide="plus" class="w-12 h-12 text-gray-400 mb-4"></i>
+                    <p class="text-gray-500 font-medium">Add New Property</p>
+                </div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        function loadLandlordApplications() {
+            const applications = RentilyDB.getApplicationsByLandlord(currentUser.id);
+            const container = document.getElementById('landlord-applications-list');
+            
+            if (applications.length === 0) {
+                container.innerHTML = '<p class="text-gray-600 text-center py-8">No applications yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Property</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${applications.map(app => {
+                            const property = RentilyDB.getAllProperties().find(p => p.id === app.propertyId);
+                            const tenant = RentilyDB.findUserById(app.tenantId);
+                            return `
+                                <tr>
+                                    <td class="p-3">${app.name}</td>
+                                    <td class="p-3">${property ? property.address : 'Unknown'}</td>
+                                    <td class="p-3">${new Date(app.submittedAt).toLocaleDateString()}</td>
+                                    <td class="p-3">
+                                        <span class="status-badge status-${app.status}">
+                                            ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                                        </span>
+                                    </td>
+                                    <td class="p-3 text-right">
+                                        <button class="text-blue-600 hover:underline mr-3" onclick="reviewApplication(${app.id})">Review</button>
+                                        ${app.status === 'pending' ? `
+                                            <button class="text-green-600 hover:underline mr-2" onclick="updateApplicationStatus(${app.id}, 'approved')">Approve</button>
+                                            <button class="text-red-600 hover:underline" onclick="updateApplicationStatus(${app.id}, 'rejected')">Reject</button>
+                                        ` : ''}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function loadLandlordMessages() {
+            const contacts = RentilyDB.getConversationPartners(currentUser.id);
+            const contactsContainer = document.getElementById('landlord-contacts-list');
+            
+            if (contacts.length === 0) {
+                contactsContainer.innerHTML = '<p class="text-gray-600 text-center py-8">No conversations yet.</p>';
+                return;
+            }
+            
+            contactsContainer.innerHTML = contacts.map(contact => {
+                const messages = RentilyDB.getMessagesBetweenUsers(currentUser.id, contact.id);
+                const lastMessage = messages[messages.length - 1];
+                return `
+                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b" onclick="loadLandlordConversation(${contact.id})">
+                        <p class="font-medium">${contact.name}</p>
+                        <p class="text-sm text-gray-500 truncate">${lastMessage ? lastMessage.content : 'No messages yet'}</p>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        function loadLandlordConversation(contactId) {
+            const contact = RentilyDB.findUserById(contactId);
+            const messages = RentilyDB.getMessagesBetweenUsers(currentUser.id, contactId);
+            
+            document.getElementById('landlord-chat-header').textContent = contact.name;
+            document.getElementById('landlord-message-input').classList.remove('hidden');
+            
+            const messagesContainer = document.getElementById('landlord-messages-list');
+            messagesContainer.innerHTML = messages.map(msg => `
+                <div class="flex ${msg.senderId === currentUser.id ? 'justify-end' : 'justify-start'}">
+                    <div class="message-bubble ${msg.senderId === currentUser.id ? 'sent' : 'received'}">
+                        <p class="text-sm">${msg.content}</p>
+                        <span class="text-xs opacity-70 mt-1 block">
+                            ${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            currentLandlordConversation = contactId;
+        }
+
+        function sendMessageAsLandlord() {
+            if (!currentLandlordConversation) return;
+            
+            const messageInput = document.getElementById('landlord-new-message');
+            const content = messageInput.value.trim();
+            
+            if (!content) return;
+            
+            RentilyDB.createMessage({
+                senderId: currentUser.id,
+                receiverId: currentLandlordConversation,
+                content: content
+            });
+            
+            messageInput.value = '';
+            loadLandlordConversation(currentLandlordConversation);
+            loadLandlordMessages(); // Refresh contacts list
+        }
+
+        function loadLandlordServiceRequests() {
+            const requests = RentilyDB.getServiceRequestsByLandlord(currentUser.id);
+            const container = document.getElementById('landlord-requests-list');
+            
+            if (requests.length === 0) {
+                container.innerHTML = '<p class="text-gray-600 text-center py-8">No service requests yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = requests.map(req => {
+                const property = RentilyDB.getAllProperties().find(p => p.id === req.propertyId);
+                const tenant = RentilyDB.findUserById(req.tenantId);
+                return `
+                    <div class="border rounded-lg p-4 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-semibold">${req.type.charAt(0).toUpperCase() + req.type.slice(1)} Issue</h4>
+                            <p class="text-sm text-gray-600">${req.description}</p>
+                            <p class="text-xs text-gray-500">Property: ${property ? property.address : 'Unknown'}</p>
+                            <p class="text-xs text-gray-500">Submitted: ${new Date(req.submittedAt).toLocaleDateString()}</p>
+                        </div>
+                        <div class="flex space-x-2 items-center">
+                            <span class="status-badge status-${req.status}">
+                                ${req.status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                            </span>
+                            <button class="btn-secondary text-sm" onclick="viewServiceRequest(${req.id})">View Details</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateLandlordCounts() {
+            const properties = RentilyDB.getPropertiesByLandlord(currentUser.id);
+            const applications = RentilyDB.getApplicationsByLandlord(currentUser.id);
+            
+            document.getElementById('landlord-properties-count').textContent = properties.length;
+            
+            // Count unique tenants from applications and properties
+            const tenantIds = new Set();
+            applications.forEach(app => tenantIds.add(app.tenantId));
+            document.getElementById('landlord-tenants-count').textContent = tenantIds.size;
+        }
+
+        function addProperty() {
+            const address = document.getElementById('property-address').value;
+            const rent = parseInt(document.getElementById('property-rent').value);
+            const description = document.getElementById('property-description').value;
+            const bedrooms = parseInt(document.getElementById('property-bedrooms').value);
+            const bathrooms = parseInt(document.getElementById('property-bathrooms').value);
+            const sqft = parseInt(document.getElementById('property-sqft').value);
+            const type = document.getElementById('property-type').value;
+            
+            RentilyDB.createProperty({
+                landlordId: currentUser.id,
+                address: address,
+                rent: rent,
+                description: description,
+                bedrooms: bedrooms,
+                bathrooms: bathrooms,
+                sqft: sqft,
+                type: type,
+                status: 'available',
+                images: ['https://placehold.co/600x400/1E40AF/FFFFFF?text=Property']
+            });
+            
+            hideModal('add-property-modal');
+            document.getElementById('add-property-form').reset();
+            loadLandlordDashboard();
+        }
+
+        function updateApplicationStatus(applicationId, status) {
+            RentilyDB.updateApplicationStatus(applicationId, status);
+            loadLandlordApplications();
+        }
+
+        // =========================================================================
+        // TENANT DASHBOARD FUNCTIONS
+        // =========================================================================
+
+        function loadTenantDashboard() {
+            if (!currentUser) return;
+            
+            // Update user info
+            document.getElementById('tenant-user-name').textContent = currentUser.name;
+            
+            // Load available properties for application
+            loadAvailableProperties();
+            
+            // Load tenant applications
+            loadTenantApplications();
+            
+            // Load tenant messages
+            loadTenantMessages();
+            
+            // Load properties for service requests
+            loadTenantPropertiesForRequests();
+        }
+
+        function loadAvailableProperties() {
+            const properties = RentilyDB.getAllProperties().filter(p => p.status === 'available');
+            const select = document.getElementById('application-property');
+            
+            select.innerHTML = '<option value="">Select a property</option>' +
+                properties.map(property => `
+                    <option value="${property.id}">${property.address} - $${property.rent}/mo</option>
+                `).join('');
+        }
+
+        function loadTenantPropertiesForRequests() {
+            // For demo, tenants can submit requests for any property they've applied to
+            const applications = RentilyDB.getApplicationsByTenant(currentUser.id);
+            const appliedPropertyIds = applications.map(app => app.propertyId);
+            const properties = RentilyDB.getAllProperties().filter(p => appliedPropertyIds.includes(p.id));
+            
+            const select = document.getElementById('request-property');
+            select.innerHTML = '<option value="">Select property</option>' +
+                properties.map(property => `
+                    <option value="${property.id}">${property.address}</option>
+                `).join('');
+        }
+
+        function submitApplication() {
+            const propertyId = parseInt(document.getElementById('application-property').value);
+            const name = document.getElementById('application-name').value;
+            const email = document.getElementById('application-email').value;
+            const phone = document.getElementById('application-phone').value;
+            const currentAddress = document.getElementById('application-current-address').value;
+            const income = parseInt(document.getElementById('application-income').value);
+            const notes = document.getElementById('application-notes').value;
+            
+            if (!propertyId) {
+                alert('Please select a property');
+                return;
+            }
+            
+            RentilyDB.createApplication({
+                tenantId: currentUser.id,
+                propertyId: propertyId,
+                name: name,
+                email: email,
+                phone: phone,
+                currentAddress: currentAddress,
+                income: income,
+                notes: notes
+            });
+            
+            // Reset form
+            document.getElementById('tenant-application-form').reset();
+            
+            // Show success message
+            alert('Application submitted successfully!');
+            
+            // Refresh applications list
+            loadTenantApplications();
+        }
+
+        function loadTenantApplications() {
+            const applications = RentilyDB.getApplicationsByTenant(currentUser.id);
+            const container = document.getElementById('tenant-applications-list');
+            
+            if (applications.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i data-lucide="file-text" class="w-12 h-12 text-gray-400 mx-auto mb-4"></i>
+                        <p class="text-gray-600">You haven't submitted any applications yet.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = applications.map(app => {
+                const property = RentilyDB.getAllProperties().find(p => p.id === app.propertyId);
+                return `
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-semibold">${property ? property.address : 'Unknown Property'}</h4>
+                            <span class="status-badge status-${app.status}">
+                                ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Submitted: ${new Date(app.submittedAt).toLocaleDateString()}</p>
+                        <p class="text-sm text-gray-600">Rent: $${property ? property.rent : 'N/A'}/mo</p>
+                        <button class="btn-secondary mt-3" onclick="viewApplication(${app.id})">View Details</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadTenantMessages() {
+            const contacts = RentilyDB.getConversationPartners(currentUser.id);
+            const contactsContainer = document.getElementById('tenant-contacts-list');
+            
+            if (contacts.length === 0) {
+                contactsContainer.innerHTML = '<p class="text-gray-600 text-center py-8">No conversations yet.</p>';
+                return;
+            }
+            
+            contactsContainer.innerHTML = contacts.map(contact => {
+                const messages = RentilyDB.getMessagesBetweenUsers(currentUser.id, contact.id);
+                const lastMessage = messages[messages.length - 1];
+                return `
+                    <li class="p-4 hover:bg-gray-100 cursor-pointer border-b" onclick="loadTenantConversation(${contact.id})">
+                        <p class="font-medium">${contact.name}</p>
+                        <p class="text-sm text-gray-500 truncate">${lastMessage ? lastMessage.content : 'No messages yet'}</p>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        function loadTenantConversation(contactId) {
+            const contact = RentilyDB.findUserById(contactId);
+            const messages = RentilyDB.getMessagesBetweenUsers(currentUser.id, contactId);
+            
+            document.getElementById('tenant-chat-header').textContent = contact.name;
+            document.getElementById('tenant-message-input').classList.remove('hidden');
+            
+            const messagesContainer = document.getElementById('tenant-messages-list');
+            messagesContainer.innerHTML = messages.map(msg => `
+                <div class="flex ${msg.senderId === currentUser.id ? 'justify-end' : 'justify-start'}">
+                    <div class="message-bubble ${msg.senderId === currentUser.id ? 'sent' : 'received'}">
+                        <p class="text-sm">${msg.content}</p>
+                        <span class="text-xs opacity-70 mt-1 block">
+                            ${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            currentTenantConversation = contactId;
+        }
+
+        function sendMessageAsTenant() {
+            if (!currentTenantConversation) return;
+            
+            const messageInput = document.getElementById('tenant-new-message');
+            const content = messageInput.value.trim();
+            
+            if (!content) return;
+            
+            RentilyDB.createMessage({
+                senderId: currentUser.id,
+                receiverId: currentTenantConversation,
+                content: content
+            });
+            
+            messageInput.value = '';
+            loadTenantConversation(currentTenantConversation);
+            loadTenantMessages(); // Refresh contacts list
+        }
+
+        function submitServiceRequest() {
+            const propertyId = parseInt(document.getElementById('request-property').value);
+            const type = document.getElementById('request-type').value;
+            const description = document.getElementById('request-description').value;
+            const urgency = document.getElementById('request-urgency').value;
+            
+            if (!propertyId) {
+                alert('Please select a property');
+                return;
+            }
+            
+            RentilyDB.createServiceRequest({
+                tenantId: currentUser.id,
+                propertyId: propertyId,
+                type: type,
+                description: description,
+                urgency: urgency
+            });
+            
+            // Reset form
+            document.getElementById('service-request-form').reset();
+            
+            // Show success message
+            alert('Service request submitted successfully!');
+        }
+
+        // =========================================================================
+        // ADMIN DASHBOARD FUNCTIONS
+        // =========================================================================
+
+        function loadAdminDashboard() {
+            if (!currentUser) return;
+            
+            // Update user info
+            document.getElementById('admin-user-name').textContent = currentUser.name;
+            
+            // Load users
+            loadAdminUsers();
+            
+            // Load properties
+            loadAdminProperties();
+            
+            // Load applications
+            loadAdminApplications();
+        }
+
+        function loadAdminUsers() {
+            const users = RentilyDB.loadData().users;
+            const container = document.getElementById('admin-users-list');
+            
+            container.innerHTML = users.map(user => `
+                <tr>
+                    <td class="p-3">${user.name}</td>
+                    <td class="p-3">${user.email}</td>
+                    <td class="p-3">${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                    <td class="p-3">
+                        <span class="status-badge status-completed">Active</span>
+                    </td>
+                    <td class="p-3 text-right">
+                        <button class="text-blue-600 hover:underline mr-3">Edit</button>
+                        <button class="text-red-600 hover:underline">Deactivate</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadAdminProperties() {
+            const properties = RentilyDB.getAllProperties();
+            const container = document.getElementById('admin-properties-list');
+            
+            container.innerHTML = properties.map(property => {
+                const landlord = RentilyDB.findUserById(property.landlordId);
+                return `
+                    <tr>
+                        <td class="p-3">${property.address}</td>
+                        <td class="p-3">${landlord ? landlord.name : 'Unknown'}</td>
+                        <td class="p-3">$${property.rent}</td>
+                        <td class="p-3">
+                            <span class="status-badge status-${property.status === 'available' ? 'completed' : 'pending'}">
+                                ${property.status.charAt(0).toUpperCase() + property.status.slice(1)}
+                            </span>
+                        </td>
+                        <td class="p-3 text-right">
+                            <button class="text-blue-600 hover:underline mr-3">View</button>
+                            <button class="text-red-600 hover:underline">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function loadAdminApplications() {
+            const applications = RentilyDB.getAllApplications();
+            const container = document.getElementById('admin-applications-list');
+            
+            container.innerHTML = applications.map(app => {
+                const property = RentilyDB.getAllProperties().find(p => p.id === app.propertyId);
+                const tenant = RentilyDB.findUserById(app.tenantId);
+                return `
+                    <tr>
+                        <td class="p-3">${app.name}</td>
+                        <td class="p-3">${property ? property.address : 'Unknown'}</td>
+                        <td class="p-3">${new Date(app.submittedAt).toLocaleDateString()}</td>
+                        <td class="p-3">
+                            <span class="status-badge status-${app.status}">
+                                ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                            </span>
+                        </td>
+                        <td class="p-3 text-right">
+                            <button class="text-blue-600 hover:underline mr-3">Review</button>
+                            <button class="text-green-600 hover:underline">Approve</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // =========================================================================
+        // UTILITY FUNCTIONS
+        // =========================================================================
+
         // Show demo instructions on page load
         document.addEventListener('DOMContentLoaded', function() {
-            showModal('demo-instructions-modal');
+            initApp();
         });
 
         // --- Demo Start Function ---
@@ -1217,28 +2135,29 @@
             }
         }
 
-        // --- Authentication Logic (Placeholder) ---
-        function login() {
-            const role = document.querySelector('input[name="role"]:checked').value;
-            
-            // ARCHITECT'S NOTE: This is where you would connect to Xano or Supabase
-            // For this MVP, we just route to the correct dashboard.
-            
-            if (role === 'landlord') {
-                showPage('landlord-dashboard');
-                setTimeout(() => showModal('landlord-tour-modal'), 500);
-            } else if (role === 'tenant') {
-                showPage('tenant-dashboard');
-                setTimeout(() => showModal('tenant-tour-modal'), 500);
-            } else if (role === 'admin') {
-                showPage('admin-dashboard');
-                setTimeout(() => showModal('admin-tour-modal'), 500);
+        // --- Modal Logic ---
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
             }
         }
 
-        function logout() {
-            showPage('auth-page');
-            // Clear session/token here
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+        
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.classList.add('hidden');
+                }
+            });
         }
 
         // --- Dashboard Tab Navigation ---
@@ -1317,31 +2236,6 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // --- Modal Logic ---
-        function showModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function hideModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('hidden');
-            }
-        }
-        
-        // Close modal on outside click
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target == modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-        }
-
         // --- Tour Functions ---
         function showLandlordTour() {
             showModal('landlord-tour-modal');
@@ -1353,6 +2247,23 @@
         
         function showAdminTour() {
             showModal('admin-tour-modal');
+        }
+
+        // Global variables for current conversations
+        let currentLandlordConversation = null;
+        let currentTenantConversation = null;
+
+        // Placeholder functions for features not fully implemented
+        function reviewApplication(id) {
+            alert(`Application ${id} review functionality would be implemented here.`);
+        }
+
+        function viewServiceRequest(id) {
+            alert(`Service request ${id} details would be shown here.`);
+        }
+
+        function viewApplication(id) {
+            alert(`Application ${id} details would be shown here.`);
         }
 
     </script>
